@@ -3,7 +3,7 @@ import axios from "axios"
 const handleSuccess = res => res.data
 const handleError = e => { console.error(e) }
 
-export const getPokemonTypes = () => axios.get('https://pokeapi.co/api/v2/type/')
+export const getPokemonTypes = ({ limit = 10, offset = 0 } = {}) => axios.get('https://pokeapi.co/api/v2/type/', { params: { limit, offset } })
     .then(handleSuccess)
     .catch(handleError)
 
