@@ -10,11 +10,11 @@
         <div v-if="loading" class="text-center">
           <v-progress-circular :size="70" color="primary" indeterminate></v-progress-circular>
         </div>
-        <div v-else class="pokemon-layout">
-          <div v-for="pokemon in pokemons">
+        <v-row>
+          <v-col v-for="pokemon in pokemons" cols=12 xs="12" sm="4">
             <PokemonCard :pokemon="pokemon" :addPokemon="addPokemon" />
-          </div>
-        </div>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="12" sm="12" md="3">
         <h4 class="text-center">My pokemons</h4>
@@ -140,12 +140,3 @@ export default {
 
 }
 </script>
-
-<style>
-.pokemon-layout {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-}
-</style>
