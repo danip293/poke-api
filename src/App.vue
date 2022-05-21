@@ -38,12 +38,16 @@ export default {
   }),
   methods: {
     logout() {
+      this.isLoggued = false
       document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      this.$router.push('/login')
+    },
+    sincLoggued() {
+      this.isLoggued = !!getCookie('session')
     }
-  }
-  // mounted() {
-
-
-  // }
+  },
+  watch: {
+    '$route': 'sincLoggued'
+  },
 };
 </script>
