@@ -7,7 +7,7 @@
       </div>
 
       <v-spacer></v-spacer>
-      <div>bienvenido</div>
+      <div v-show="isLoggued">Bienvenido</div>
 
       <v-btn href="/home" text>
         <span class="mr-2">Home</span>
