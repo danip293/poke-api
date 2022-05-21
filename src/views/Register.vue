@@ -1,7 +1,8 @@
 <script>
+import { singup } from '../store/authService'
 export default {
     data: () => ({
-        valid: false,
+        error: null,
         email: '',
         password1: '',
         password2: '',
@@ -15,32 +16,40 @@ export default {
 
         ],
     }),
+    methods: {
+        submit() {
+            singup(this.email, this.password1)
+                .then(() => { this.$router.replace('/home') })
+                .catch(errMessage => {
+                    this.error = errMessage
+                })
+        }
+    }
 }
 </script>
 
 <template>
-    <div class="about">
-        <h1>Register</h1>
-        <v-form v-model="valid">
-            <v-container>
-                <v-row>
-                    <v-col cols="12" md="4">
-                        <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="4">
-                        <v-text-field v-model="password1" :rules="passwordRules" type="password" label="Password"
-                            required></v-text-field>
-                    </v-col>
-                    <v-col cols="12" md="4">
-                        <v-text-field v-model="password2" :rules="passwordRules" type="password" label="Password"
-                            required></v-text-field>
-                    </v-col>
-                </v-row>
-                <v-btn class="mr-4" @click="submit">
-                    submit
-                </v-btn>
-            </v-container>
+    <v-card class="mx-auto my-12" max-width="374">
+        <v-alert v-show="error" type="error">{{ error }}</v-alert>
+        <v-card-title>Register</v-card-title>
+        <v-card-text>
+            <v-form>
+                <v-text-field v-model="email" :rules="emailRules" label="E-mail" required>
+                </v-text-field>
 
-        </v-form>
-    </div>
+                <v-text-field v-model="password1" :rules="passwordRules" type="password" label="Password" required>
+                </v-text-field>
+
+                <v-text-field v-model="password2" :rules="passwordRules" type="password" label="Password" required>
+                </v-text-field>
+
+                <v-card-actions>
+                    <v-btn class="mr-4" @click="submit">
+                        submit
+                    </v-btn>
+                </v-card-actions>
+            </v-form>
+        </v-card-text>
+    </v-card>
+
 </template>

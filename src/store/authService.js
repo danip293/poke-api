@@ -1,0 +1,51 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth } from '../firebase'
+
+export const setCookie = (cname, cvalue, exdays) => {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+export const getCookie = (cname) => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+export const singup = (email, password) => createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const Token = userCredential.user.accessToken
+        setCookie('session', Token, 10)
+    })
+    .catch((error) => {
+        const errorMessage = error.message;
+        return Promise.reject(errorMessage)
+    });
+
+export const login = (email, password) => signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+        const Token = userCredential.user.accessToken
+        setCookie('session', Token, 10)
+    })
+    .catch((error) => {
+        const errorMessage = error.message;
+        return Promise.reject(errorMessage)
+    });
+
+export const singout = () => signOut(auth).then(() => {
+    // Sign-out successful.
+}).catch((error) => {
+    // An error happened.
+});
