@@ -11,6 +11,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/pokemon-detail/:id',
+    name: 'pokemonDetail',
+    component: () => import(/* webpackChunkName: "pokemon-detail" */ '../views/PokemonDetail.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
