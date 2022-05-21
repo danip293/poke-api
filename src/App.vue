@@ -15,7 +15,7 @@
       <v-btn href="/home" text>
         <span class="mr-2">Habilidades</span>
       </v-btn>
-      <v-btn v-if="isLoggued" href='/register' text>
+      <v-btn v-if="isLoggued" href='/login' @click="logout" text>
         <span class="mr-2">Cerrar sesion</span>
       </v-btn>
       <v-btn v-else href="/login" text>
@@ -36,6 +36,11 @@ export default {
   data: () => ({
     isLoggued: !!getCookie('session')
   }),
+  methods: {
+    logout() {
+      document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  }
   // mounted() {
 
 
