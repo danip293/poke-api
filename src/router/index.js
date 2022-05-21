@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { getCookie } from '../store/authService'
 
 Vue.use(VueRouter)
 
@@ -8,12 +9,22 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    beforeEnter: (to, from, next) => {
+      const isLoggued = !!getCookie('session')
+      if (!isLoggued) next({ name: 'login' })
+      else next()
+    }
   },
   {
     path: '/pokemon-detail/:id',
     name: 'pokemonDetail',
-    component: () => import(/* webpackChunkName: "pokemon-detail" */ '../views/PokemonDetail.vue')
+    component: () => import(/* webpackChunkName: "pokemon-detail" */ '../views/PokemonDetail.vue'),
+    beforeEnter: (to, from, next) => {
+      const isLoggued = !!getCookie('session')
+      if (!isLoggued) next({ name: 'login' })
+      else next()
+    }
   },
   {
     path: '/about',
