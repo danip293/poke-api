@@ -8,19 +8,32 @@
 
       <v-spacer></v-spacer>
       <div v-show="isLoggued">Bienvenido</div>
+      <router-link to="/home">
+        <v-btn text>
+          <span class="mr-2">Home</span>
+        </v-btn>
+      </router-link>
+      <router-link to="/home">
+        <v-btn text>
+          <span class="mr-2">Habilidades</span>
+        </v-btn>
+      </router-link>
 
-      <v-btn href="/home" text>
-        <span class="mr-2">Home</span>
-      </v-btn>
-      <v-btn href="/home" text>
-        <span class="mr-2">Habilidades</span>
-      </v-btn>
-      <v-btn v-if="isLoggued" href='/login' @click="logout" text>
+      <v-btn v-if="isLoggued" @click="logout" text>
         <span class="mr-2">Cerrar sesion</span>
       </v-btn>
-      <v-btn v-else href="/login" text>
-        <span class="mr-2">Iniciar sesion</span>
-      </v-btn>
+      <div v-else>
+        <router-link to="/login">
+          <v-btn text>
+            <span class="mr-2">Iniciar sesion</span>
+          </v-btn>
+        </router-link>
+        <router-link to="/register">
+          <v-btn text>
+            <span class="mr-2">Registrarse</span>
+          </v-btn>
+        </router-link>
+      </div>
     </v-app-bar>
 
     <v-main>
